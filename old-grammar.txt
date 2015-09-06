@@ -1,0 +1,41 @@
+// Try it out online: http://pegjs.org/online
+// test string: 15.08.23w+4d+3y-4m +4d test +3w test >3
+// test string: 15.08.24t+4d       test       test
+
+{
+  function p(str) { return parseInt(str, 10); }  // parse string to int
+  function removeNulls(arr) { return arr.filter(function(n) { return n; }) }
+}
+
+start
+  = p:date a:fixedAdd? d:wDesc {return {date:p, fixedAdd:a, desc:d.text, floatingAdds:d.adds};}
+  / a:fixedAdd d:wDesc {return {fixedAdd:a, desc:d.text, floatingAdds:d.adds};}
+  / d:desc {return {desc:d.text, floatingAdds:d.adds};}
+
+desc = [ ]* c:descChunk* {return {text:text(), adds:removeNulls(c)};}
+wDesc = _ c:descChunk* {return {text:text(), adds:removeNulls(c)};}
+descChunk
+  = f:floatingAdd _ { return f; }
+  / f:floatingJump _ { return f; }
+  / [^ ]+ _ { return null; }
+
+fixedAdd = sign:[+-] a:oDigits u:oUnit {return {amount:p(sign + a), unit:u};}
+floatingAdd = '+' a:oDigits u:oUnit {return {type:"add", amount:a, unit:u};}
+floatingJump = '>' a:oDigits u:oUnit {return {type:"jump", amount:a, unit:u};}
+
+date = YMD / MD / D / W
+YMD = y:year dot m:month dot d:day w:weekday? {return {type:"YMD", year:y, month:m, day:d, weekday:w};}
+MD = m:month dot d:day w:weekday? {return {type:"MD", month:m, day:d, weekday:w};}
+D = d:day w:weekday? {return {type:"D", day:d, weekday:w};}
+W = w:weekday {return {type:"W", weekday:w};}
+
+year "year" = digit digit? { return p(text()); }
+month "month" = digit digit? { return p(text()); }
+day "day" = digit digit? { return p(text()); }
+weekday "weekday" = [mtwrfsu]
+
+dot "dot" = '.'
+_ "chunk separator" = ' '+ / !.
+digit "digit" = [0-9]
+oDigits "optional digits" = n:$(digit*) { return n ? p(n) : 1; }
+oUnit "optional add unit" = u:[dwmy]? { return u || 'd'; }

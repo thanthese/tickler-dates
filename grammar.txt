@@ -1,0 +1,34 @@
+// Try it: http://pegjs.org/online
+{function int(text) { return parseInt(text, 10); }}
+
+start
+  = d:date a:add? &[ ] t:desc    {return{date:d, add:a, desc:t};}
+  /        a:add  &[ ] t:desc    {return{        add:a, desc:t};}
+  / d:date a:add?             !. {return{date:d, add:a        };}
+  /        a:add              !. {return{        add:a        };}
+  /                    t:desc    {return{               desc:t};}
+
+date
+  = year:(pair [.] &(pair [.]))? month:(pair [.])? day:pair w:weekday?
+    {return{year:int(year) + 2000, month:int(month), day:int(day), weekday:w};}
+  / w:weekday {return{weekday:w};}
+
+add  = [+] d:$(digit*) u:unit? {return{type:"add",  amount:d ? int(d) : 1, unit:u || 'd'};}
+jump = [>] d:$(digit*) u:unit? {return{type:"jump", amount:d ? int(d) : 1, unit:u || 'd'};}
+byWeek = [|] j:[my] s:[+-] d:digit w:weekday
+  {return{type:"byWeek", jumpUnit:j, sign:s, amount:int(d), weekday:w};}
+
+desc = [ ]* chunks:(chunk*) {
+  var c = chunks.filter(function(n){return n;});
+  return c.length == 0 ? {text:text()} : {text:text(), repeat:c[0]};
+}
+chunk
+  = r:repeater !.     {return r;}
+  / r:repeater [ ] .* {return r;}
+  / [^ ]+ [ ]*        {return null;}
+repeater = add / jump / byWeek
+
+digit = [0-9]
+pair = digit digit? { return int(text()); }
+unit = [dwmy]
+weekday = [mtwrfsu]

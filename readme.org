@@ -1,0 +1,9 @@
+* Installation
+
+Requires [[https://nodejs.org/][node]] and [[http://pegjs.org/online][PEG.js]]. You can install PEG with:
+
+#+BEGIN_SRC
+npm install pegjs
+#+END_SRC
+
+or generate the necessary files [[http://pegjs.org/online][online]].
