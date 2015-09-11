@@ -16,7 +16,7 @@ date
 add  = [+] d:$(digit*) u:unit? {return{type:"add",  amount:d ? int(d) : 1, unit:u || 'd'};}
 jump = [>] d:$(digit*) u:unit? {return{type:"jump", amount:d ? int(d) : 1, unit:u || 'd'};}
 byWeek = [|] j:[my] s:[+-] d:digit w:weekday
-  {return{type:"byWeek", jumpUnit:j, sign:s, amount:int(d), weekday:w};}
+  {return{type:"byWeek", jumpUnit:j, amount:int(s + d), weekday:w};}
 
 desc = [ ]* chunks:(chunk*) {
   var c = chunks.filter(function(n){return n;});
