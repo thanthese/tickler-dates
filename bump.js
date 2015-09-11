@@ -1,12 +1,17 @@
 var fs = require("fs");
+var path = require("path");
 var PEG = require("pegjs");
 
 module.exports.bump = bump;
 module.exports.prettyDate = prettyDate;
+module.exports.getGrammarString = getGrammarString;
+
+function getGrammarString() {
+    return fs.readFileSync(__dirname + path.sep + "grammar.txt").toString();
+}
 
 function bump(text, today, plus) {
-    var grammar = fs.readFileSync("grammar.txt").toString();
-    var p = PEG.buildParser(grammar).parse(text);
+    var p = PEG.buildParser(getGrammarString()).parse(text);
     var date = completeDate(p, today);
     date = addFixedAdds(p, date);
     if((p.date && p.date.year) && !p.add && !plus)

@@ -1,10 +1,12 @@
 var fs = require("fs");
+var path = require("path");
 var PEG = require("pegjs");
 var bump = require("./bump");
 
 // build parser ----------------------------------------
 
-var P = PEG.buildParser(fs.readFileSync("grammar.txt").toString());
+var grammarSpec = __dirname + path.sep + "grammar.txt";
+var P = PEG.buildParser(bump.getGrammarString());
 
 // minimal testing framework ----------------------------------------
 
