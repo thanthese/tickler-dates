@@ -9,16 +9,15 @@ function bump(text, today, plus) {
     var p = PEG.buildParser(grammar).parse(text);
     var date = completeDate(p, today);
     date = addFixedAdds(p, date);
-    if(p.date && p.date.year && !p.add && plus == 0) date = addDescRepeats(p, date, today);
+    if((p.date && p.date.year) && !p.add && !plus)
+        date = addDescRepeats(p, date, today);
     date = addDays(date, plus);
-    var desc = buildDesc(p);
-    return prettyDate(date) + desc;
+    return prettyDate(date) + buildDesc(p);
 }
 
 function completeDate(parsedText, today) {
     if(!parsedText.date) return today;
     var d = parsedText.date;
-    if(!d.day && !d.weekday) return today;
     if(d.year && d.month && d.day) return new Date(d.year, d.month - 1, d.day);
     var date = new Date(today);
     for(var i = 0; i < 365 * 8; ++i) {
@@ -42,8 +41,7 @@ function buildDesc(parsedText) {
 
 function addFixedAdds(parsedText, date) {
     if(!parsedText.add) return date;
-    var a = parsedText.add;
-    return addToDate(date, a.unit, a.amount);
+    return addToDate(date, parsedText.add.unit, parsedText.add.amount);
 }
 
 function addDescRepeats(parsedText, date, today) {
@@ -63,7 +61,7 @@ function addDescRepeats(parsedText, date, today) {
             date = addYears(date, 1);
         }
         var weeks = listWeeks(date.getFullYear(), date.getMonth(), r.weekday);
-        var weekIndex = parseInt(r.amount, 10);
+        var weekIndex = r.amount;
         if (weekIndex < 0) {
             date = weeks[weeks.length + weekIndex];
         } else {
