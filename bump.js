@@ -108,9 +108,6 @@ function addMonths(date, n) {
     var newDate = new Date(date.getFullYear() + (totalMonths / 12),
                            totalMonths % 12,
                            date.getDate());
-    if (date.getDate() !== newDate.getDate()) {
-        throw "Dates don't match after adding " + n + " months(s): " + date + " => " + newDate;
-    }
     return newDate;
 }
 
