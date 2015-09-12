@@ -40,7 +40,7 @@ Each line is an entry. The first half is the date in =YY.MM.DDw= format (where M
 
 * Operations
 
-*Note: these examples assume that today is =15.09.10r=.*
+/Note: these examples assume that today is =15.09.10r=./
 
 A vanilla entry with a complete date (and optional description) is left alone.
 
