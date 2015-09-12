@@ -11,7 +11,7 @@ Intended use is to pipe a line from a text editor through the utility and back i
 
 # Installation
 
-Requires [[https://nodejs.org/][node]] and the [[http://pegjs.org/online][PEG.js]] library. To install:
+Requires [note](https://nodejs.org/) and the [PEG.js](http://pegjs.org/online) library. To install:
 
 ```
 > git clone https://github.com/thanthese/tickler-dates
@@ -76,7 +76,7 @@ You can specify an amount to add to the date in terms of `d`ays, `w`eeks, `m`ont
 15.09.12s+1  add day  =>   15.09.13u add day
 15.09.12s+d  add day  =>   15.09.13u add day
 15.09.12s+   add day  =>   15.09.13u add day
-15.09.12s+20y  =>   35.09.10m
+15.09.12s+20y   =>   35.09.10m
 ```
 
 The utility accepts a `--plus` argument that behaves similarly. Use it to add a (possibly negative) number of days to the date.
@@ -89,7 +89,7 @@ echo "15.09.10 subtract 4 days" | node main.js --plus -4
 15.09.06u subtract 4 days
 ```
 
-You can define a repetition interval anywhere in the description, separated from the other text by whitespace. `>` adds to the shown week. Only the first repeat is accepted. This is useful for, say, tracking a weekly appointment. Repetition intervals are only applied for "complete dates" -- the year was specified, there was no add, and `--plus` was not used.
+You can define a repetition interval anywhere in the description, separated from the other text by whitespace. `>` adds to the shown week. Only the first repeat is accepted. This is useful for, say, tracking a weekly appointment. Repetition intervals are only applied for "complete dates" -- that is, the year was specified, there was no add, and `--plus` was not used.
 
 ```
 15.09.12s > plus    one    day       =>   15.09.13u > plus    one    day
@@ -102,7 +102,7 @@ You can define a repetition interval anywhere in the description, separated from
 15.09.12s >2y plus 2 years   =>   17.09.12t >2y plus 2 years
 ```
 
-`+` works almost the same way, but it adds from *today* rather than whatever date is shown. As example, let's say you'd like to get a haircut every 2 weeks. But if you don't get a haircut for 3 weeks, you don't want the next one in 1 week -- you still want it 2 weeks from now. `+` preserves the spacing between reminders.
+`+` works almost the same way, but it adds from *today* rather than whatever date is shown. As an example, let's say you'd like to get a haircut every 2 weeks. But if you don't get a haircut for 3 weeks, you don't want the next one in 1 week -- you still want it 2 weeks from now. `+` preserves the spacing between reminders.
 
 ```
 11.02.01t +1w   =>   15.09.17r +1w
@@ -161,8 +161,9 @@ I find these functions helpful for working with dates within emacs.
   (define-key prelude-mode-map (kbd "s-d") 'bump-date)
   (define-key prelude-mode-map (kbd "s-D") 'insert-date)
 
-  ;; within org-mode, I like my dates to be syntax highlighted different
-  ;; colors depending on the day of the week
+  ;; Within org-mode, I like my dates to be syntax highlighted
+  ;; different colors depending on the day of the week. I also like to
+  ;; use # and @ to tag entries.
   (font-lock-add-keywords
    'org-mode
    '(
