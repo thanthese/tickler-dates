@@ -181,5 +181,9 @@ I find these functions helpful for working with dates within emacs.
      ))
 #+END_SRC
 
+* Future work
+
+If there's interest, make this npm installable.
+
 * License
 MIT
