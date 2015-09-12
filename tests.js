@@ -5,18 +5,17 @@ var bump = require("./bump");
 
 // build parser ----------------------------------------
 
-var grammarSpec = __dirname + path.sep + "grammar.txt";
 var P = PEG.buildParser(bump.getGrammarString());
 
 // minimal testing framework ----------------------------------------
 
 var T = function newTestRunner() {
     var tests = [];
-    var passed = 0;
-    var failed = 0;
     return {
         add: function(t) { tests.push(t); },
         runTests: function() {
+            var passed = 0;
+            var failed = 0;
             for(var i in tests.reverse()) {
                 try {
                     tests[i]();

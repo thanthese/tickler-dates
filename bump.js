@@ -105,10 +105,9 @@ function addDays(date, n) {
 
 function addMonths(date, n) {
     var totalMonths = date.getMonth() + n;
-    var newDate = new Date(date.getFullYear() + (totalMonths / 12),
-                           totalMonths % 12,
-                           date.getDate());
-    return newDate;
+    return new Date(date.getFullYear() + (totalMonths / 12),
+                    totalMonths % 12,
+                    date.getDate());
 }
 
 function addYears(date, n) {
