@@ -23,9 +23,11 @@ desc = [ ]* chunks:(chunk*) {
   return c.length == 0 ? {text:text()} : {text:text(), repeat:c[0]};
 }
 chunk
-  = r:repeater !.     {return r;}
-  / r:repeater [ ] .* {return r;}
-  / [^ ]+ [ ]*        {return null;}
+  =     r:repeater            !. {return r;}
+  / [(] r:repeater [)]        !. {return r;}
+  /     r:repeater     [ ] .*    {return r;}
+  / [(] r:repeater [)] [ ] .*    {return r;}
+  / [^ ]+ [ ]*                   {return null;}
 repeater = add / jump / byWeek
 
 digit = [0-9]

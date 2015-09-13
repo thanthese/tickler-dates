@@ -215,6 +215,11 @@ cmp("test", "15.09.08t test", {plus:2});
 cmp("test", "15.09.05s test", {plus:-1});
 cmp("4+2w test +4d", "15.10.20t test +4d", {plus:2});
 
+// accept ()
+cmp("15.09.09w (+2d) test", "15.09.08t (+2d) test");
+cmp("15.09.12s test a (>4d) b", "15.09.16w test a (>4d) b");
+cmp("15.09.06u test (|m+1m)", "15.10.05m test (|m+1m)");
+
 // TODO: what to do about bad formats?
 
 // run tests ----------------------------------------

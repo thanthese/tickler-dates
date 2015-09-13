@@ -89,7 +89,7 @@ echo "15.09.10 subtract 4 days" | node main.js --plus -4
 15.09.06u subtract 4 days
 ```
 
-You can define a repetition interval anywhere in the description, separated from the other text by whitespace. `>` adds to the shown week. Only the first repeat is accepted. This is useful for, say, tracking a weekly appointment. Repetition intervals are only applied for "complete dates" -- that is, the year was specified, there was no add, and `--plus` was not used.
+You can define a repetition interval anywhere in the description, separated from the other text by whitespace (and optionally surrounded with `()`s). `>` adds to the shown week. Only the first repeat is accepted. This is useful for, say, tracking a weekly appointment. Repetition intervals are only applied for "complete dates" -- that is, the year was specified, there was no add, and `--plus` was not used.
 
 ```
 15.09.12s > plus    one    day       =>   15.09.13u > plus    one    day
@@ -97,9 +97,9 @@ You can define a repetition interval anywhere in the description, separated from
 15.09.12s   plus    one >d day       =>   15.09.13u   plus    one >d day
 15.09.12s   plus    one    day >1d   =>   15.09.13u   plus    one    day >1d
 
-15.09.12s >4w plus 4 weeks   =>   15.10.10s >4w plus 4 weeks
-15.09.12s >1m plus 1 month   =>   15.10.12m >1m plus 1 month
-15.09.12s >2y plus 2 years   =>   17.09.12t >2y plus 2 years
+15.09.12s (>4w) plus 4 weeks   =>   15.10.10s (>4w) plus 4 weeks
+15.09.12s (>1m) plus 1 month   =>   15.10.12m (>1m) plus 1 month
+15.09.12s (>2y) plus 2 years   =>   17.09.12t (>2y) plus 2 years
 ```
 
 `+` works almost the same way, but it adds from *today* rather than whatever date is shown. As an example, let's say you'd like to get a haircut every 2 weeks. But if you don't get a haircut for 3 weeks, you don't want the next one in 1 week -- you still want it 2 weeks from now. `+` preserves the spacing between reminders.
