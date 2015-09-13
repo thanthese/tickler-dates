@@ -36,7 +36,7 @@ Imagine a file that looks like this:
 15.09.14m practice flute
 ```
 
-Each line is an entry. The first half is the date in `YY.MM.DDw` format (where Monday through Sunday is `m`, `t`, `w`, `r`, `f`, `s`, `u`), and the rest is a description. This format allows the file to be sorted with ~sort -n~.
+Each line is an entry. The first half is the date in `YY.MM.DDw` format (where Monday through Sunday is `m`, `t`, `w`, `r`, `f`, `s`, `u`), and the rest is a description. This format allows the file to be sorted with `sort -n`.
 
 # Operations
 
