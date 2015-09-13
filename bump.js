@@ -14,9 +14,9 @@ function bump(text, today, plus) {
     var p = PEG.buildParser(getGrammarString()).parse(text);
     var date = completeDate(p, today);
     date = addFixedAdds(p, date);
+    date = addDays(date, plus);
     if((p.date && p.date.year) && !p.add && !plus)
         date = addDescRepeats(p, date, today);
-    date = addDays(date, plus);
     return prettyDate(date) + buildDesc(p);
 }
 
