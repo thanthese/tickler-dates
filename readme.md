@@ -89,7 +89,7 @@ echo "15.09.10 subtract 4 days" | node main.js --plus -4
 15.09.06u subtract 4 days
 ```
 
-You can define a repetition interval anywhere in the description, separated from the other text by whitespace (and optionally surrounded with `()`s). `>` adds to the shown week. Only the first repeat is accepted. This is useful for, say, tracking a weekly appointment. Repetition intervals are only applied for "complete dates" -- that is, the year was specified, there was no add, and `--plus` was not used.
+You can define a repetition interval anywhere in the description, separated from the other text by whitespace (and optionally surrounded with `()`s). `>` adds to the shown date. Only the first repeat is accepted. This is useful for, say, tracking a weekly appointment. Repetition intervals are only applied for "complete dates" -- that is, the year was specified, there was no add, and `--plus` was not used.
 
 ```
 15.09.12s > plus    one    day       =>   15.09.13u > plus    one    day
