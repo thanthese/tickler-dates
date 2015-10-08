@@ -11,7 +11,7 @@ Intended use is to pipe a line from a text editor through the utility and back i
 
 # Installation
 
-Requires [note](https://nodejs.org/) and the [PEG.js](http://pegjs.org/online) library. To install:
+Requires [node](https://nodejs.org/) and the [PEG.js](http://pegjs.org/online) library. To install:
 
 ```
 > git clone https://github.com/thanthese/tickler-dates
