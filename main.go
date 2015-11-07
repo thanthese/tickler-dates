@@ -25,8 +25,7 @@ func main() {
 	}
 
 	bytes, _ := ioutil.ReadAll(os.Stdin)
-	s := string(bytes)
-	fmt.Printf(Bump(s, time.Now(), *plus))
+	fmt.Printf(Bump(string(bytes), time.Now(), *plus))
 }
 
 // Main entry point for program logic. See readme for accepted syntax.

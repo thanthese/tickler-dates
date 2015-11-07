@@ -49,11 +49,11 @@ A partial date will be completed (leading whitespace shown for clarity only). In
 
 You can specify an amount to add to the date in terms of `d`ays, `w`eeks, `m`onths, or `y`ears. Defaults to `1` and `d` if pieces are left out.
 
-    15.09.12s+1d add day  =>   15.09.13u add day
-    15.09.12s+1  add day  =>   15.09.13u add day
-    15.09.12s+d  add day  =>   15.09.13u add day
-    15.09.12s+   add day  =>   15.09.13u add day
-    15.09.12s+20y         =>   35.09.10m
+    15.09.12s+1  add day   =>   15.09.13u add day
+    15.09.12s+1d add day   =>   15.09.13u add day
+    15.09.12s+d  add day   =>   15.09.13u add day
+    15.09.12s+   add day   =>   15.09.13u add day
+    15.09.12s+20y          =>   35.09.10m
 
 The utility accepts a plus argument `-p` that behaves similarly. Use it to add a (possibly negative) number of days to the date.
 
@@ -78,7 +78,7 @@ You can define a repetition interval anywhere in the description, separated from
 
     11.02.01t +1w   =>   15.09.17r +1w
 
-There's the by-week `|` operator which handles those "2nd Sunday of the month" situations.
+The by-week `|` operator handles those "2nd Sunday of the month" situations.
 
     15.09.10r |m+1r 1st Thursday of next month
     15.09.10r |m+2r 2nd Thursday of next month
@@ -87,13 +87,14 @@ There's the by-week `|` operator which handles those "2nd Sunday of the month" s
 
     15.09.10r |y+1r 1st Thursday of this month next year
 
-Finally, for when you just want today's date, use `-t` option will just spit out today.
+Finally, for when you just want today's date, the `-t` option will spit it out today.
 
-    $ tickler-date 15.09.10r
+    $ tickler-date -t
+    15.09.10r
 
 # Vim mappings
 
-These mappings live in my `.vimrc`. You may enjoy
+These mappings live in my `.vimrc`. You may enjoy.
 
 ```viml
 nnoremap <space>d !!tickler-dates<cr>
@@ -103,7 +104,7 @@ inoremap <C-t> <c-r>=system("tickler-dates -t")<cr><space>
 
 # Prefer node to go?
 
-Try the node branch! It's no longer maintained, but it just roughly exactly the same thing.
+Try the node branch! It's no longer maintained, but it does roughly (exactly) the same thing.
 
 # License
 MIT
