@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 	"testing"
 	"time"
@@ -103,6 +102,7 @@ func TestBump(t *testing.T) {
 		{"15.09.09w test+2dtest test", 0, "15.09.09w test+2dtest test"},
 		{"15.09.09w +2dtest test", 0, "15.09.09w +2dtest test"},
 		{"99.99", 0, "ERROR"},
+		// {"15.11.06test", 0, "15.09.06u 15.11.06test"}, // currently breaks, not easy to fix
 	}
 
 	today := time.Date(2015, time.September, 6, 0, 0, 0, 0, time.UTC) // a sunday
@@ -112,7 +112,6 @@ func TestBump(t *testing.T) {
 			if strings.Contains(got, "ERROR") {
 				continue
 			}
-			fmt.Println("really wanted to see an error", c.want, got)
 			t.Errorf("Was expecting an error on Bump(%q, %v, %v), but got %q instead.", prettyPrint(today), c.plus, c.in, got)
 		} else if got != c.want {
 			t.Errorf("Bump(%q, %v, %v) == %q, want %q", c.in, prettyPrint(today), c.plus, got, c.want)
