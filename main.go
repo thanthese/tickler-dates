@@ -93,28 +93,35 @@ func (f fields) hasNoAdd() bool {
 func extractFields(s string) (f fields) {
 	find := func(reg, s string) []string { return regexp.MustCompile(reg).FindStringSubmatch(s) }
 
+	// Weirdly, go's regexes don't support look-aheads. To simulate them we
+	// throw the look ahead on the end of the pattern and then use this mess to
+	// strip it off of the full matched string.
+	removeLookAhead := func(m []string) string {
+		fullMatch := m[0]
+		lastSubmatch := m[len(m)-1]
+		return fullMatch[0 : len(fullMatch)-len(lastSubmatch)]
+	}
+
 	var dateStr string
-	if m := find(`^(\d{1,2})\.(\d{1,2})\.(\d{1,2})([mtwrfsu]?)\b`, s); m != nil {
-		dateStr, f.year, f.month, f.day, f.weekday = m[0], m[1], m[2], m[3], m[4]
+	if m := find(`^(\d{1,2})\.(\d{1,2})\.(\d{1,2})([mtwrfsu]?)( |$|\+)`, s); m != nil {
+		f.year, f.month, f.day, f.weekday = m[1], m[2], m[3], m[4]
+		dateStr = removeLookAhead(m)
 	} else if m := find(`^(\d{1,2})\.(\d{1,2})([mtwrfsu]?)( |$|\+)`, s); m != nil {
-		dateStr, f.month, f.day, f.weekday = m[0], m[1], m[2], m[3]
-		// roll back the look-ahead if one was required
-		if m[4] == " " || m[4] == "+" {
-			dateStr = dateStr[0 : len(dateStr)-1]
-		}
+		f.month, f.day, f.weekday = m[1], m[2], m[3]
+		dateStr = removeLookAhead(m)
 	} else if m := find(`^(\d{1,2})([mtwrfsu]?)( |$|\+)`, s); m != nil {
-		dateStr, f.day, f.weekday = m[0], m[1], m[2]
-		if m[3] == " " || m[3] == "+" {
-			dateStr = dateStr[0 : len(dateStr)-1]
-		}
-	} else if m := find(`^([mtwrfsu])\b`, s); m != nil {
-		dateStr, f.weekday = m[0], m[1]
+		f.day, f.weekday = m[1], m[2]
+		dateStr = removeLookAhead(m)
+	} else if m := find(`^([mtwrfsu])( |$|\+)`, s); m != nil {
+		f.weekday = m[1]
+		dateStr = removeLookAhead(m)
 	}
 	r := strings.Replace(s, dateStr, "", 1)
 
 	var addStr string
-	if m := find(`^([+-])(\d*)([dwmy]?)`, r); m != nil {
-		addStr, f.addSign, f.addAmount, f.addUnit = m[0], m[1], m[2], m[3]
+	if m := find(`^([+-])(\d*)([dwmy]?)( |$)`, r); m != nil {
+		f.addSign, f.addAmount, f.addUnit = m[1], m[2], m[3]
+		addStr = removeLookAhead(m)
 	}
 	r = strings.Replace(r, addStr, "", 1)
 
