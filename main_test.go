@@ -102,7 +102,9 @@ func TestBump(t *testing.T) {
 		{"15.09.09w test+2dtest test", 0, "15.09.09w test+2dtest test"},
 		{"15.09.09w +2dtest test", 0, "15.09.09w +2dtest test"},
 		{"99.99", 0, "ERROR"},
-		// {"15.11.06test", 0, "15.09.06u 15.11.06test"}, // currently breaks, not easy to fix
+		{"01.02.03test", 0, "15.09.06u 01.02.03test"},
+		{"02.03test", 0, "15.09.06u 02.03test"},
+		{"03test", 0, "15.09.06u 03test"},
 	}
 
 	today := time.Date(2015, time.September, 6, 0, 0, 0, 0, time.UTC) // a sunday

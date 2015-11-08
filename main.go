@@ -96,10 +96,17 @@ func extractFields(s string) (f fields) {
 	var dateStr string
 	if m := find(`^(\d{1,2})\.(\d{1,2})\.(\d{1,2})([mtwrfsu]?)\b`, s); m != nil {
 		dateStr, f.year, f.month, f.day, f.weekday = m[0], m[1], m[2], m[3], m[4]
-	} else if m := find(`^(\d{1,2})\.(\d{1,2})([mtwrfsu]?)\b`, s); m != nil {
+	} else if m := find(`^(\d{1,2})\.(\d{1,2})([mtwrfsu]?)( |$|\+)`, s); m != nil {
 		dateStr, f.month, f.day, f.weekday = m[0], m[1], m[2], m[3]
-	} else if m := find(`^(\d{1,2})([mtwrfsu]?)\b`, s); m != nil {
+		// roll back the look-ahead if one was required
+		if m[4] == " " || m[4] == "+" {
+			dateStr = dateStr[0 : len(dateStr)-1]
+		}
+	} else if m := find(`^(\d{1,2})([mtwrfsu]?)( |$|\+)`, s); m != nil {
 		dateStr, f.day, f.weekday = m[0], m[1], m[2]
+		if m[3] == " " || m[3] == "+" {
+			dateStr = dateStr[0 : len(dateStr)-1]
+		}
 	} else if m := find(`^([mtwrfsu])\b`, s); m != nil {
 		dateStr, f.weekday = m[0], m[1]
 	}
