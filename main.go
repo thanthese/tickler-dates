@@ -20,7 +20,7 @@ func main() {
 	flag.Parse()
 
 	if *today {
-		fmt.Println(prettyPrint(time.Now()))
+		fmt.Printf(prettyPrint(time.Now()))
 		return
 	}
 
