@@ -67,6 +67,8 @@ func TestBump(t *testing.T) {
 		{" +4d test", 0, "15.09.06u  +4d test"},
 		{"15.09.04f  +4d test", 0, "15.09.10r  +4d test"},
 		{"15.09.04f test +4d", 0, "15.09.10r test +4d"},
+		{"15.09.04f test +4", 0, "15.09.10r test +4"},
+		{"15.09.04f test +4\n", 0, "15.09.10r test +4"},
 		{"15.09.04f test +4d ", 0, "15.09.10r test +4d "},
 		{"15.09.04f test +5d +3d", 0, "15.09.11f test +5d +3d"},
 

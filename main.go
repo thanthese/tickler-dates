@@ -30,6 +30,7 @@ func main() {
 
 // Main entry point for program logic. See readme for accepted syntax.
 func Bump(s string, today time.Time, plus int) string {
+	s = strings.Replace(s, "\n", "", -1)
 	f := extractFields(s)
 	date, err := calcDate(f, today)
 	if err != nil {
