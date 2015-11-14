@@ -226,6 +226,9 @@ func calcSeparator(f fields) string {
 // My regexes are guaranteed to provide valid ints, so we can do away with the
 // error checking.
 func atoi(s string) int {
-	i, _ := strconv.Atoi(s)
+	i, err := strconv.Atoi(s)
+	if err != nil {
+		panic(err)
+	}
 	return i
 }
