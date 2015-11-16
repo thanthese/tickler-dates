@@ -25,12 +25,20 @@ func main() {
 	}
 
 	bytes, _ := ioutil.ReadAll(os.Stdin)
-	fmt.Printf(Bump(string(bytes), time.Now(), *plus))
+	fmt.Printf(BumpMultiple(string(bytes), time.Now(), *plus))
+}
+
+func BumpMultiple(str string, today time.Time, plus int) string {
+	lines := strings.Split(strings.TrimSuffix(str, "\n"), "\n")
+	r := []string{}
+	for _, l := range lines {
+		r = append(r, bump(l, today, plus))
+	}
+	return strings.Join(r, "\n")
 }
 
 // Main entry point for program logic. See readme for accepted syntax.
-func Bump(s string, today time.Time, plus int) string {
-	s = strings.Replace(s, "\n", "", -1)
+func bump(s string, today time.Time, plus int) string {
 	f := extractFields(s)
 	date, err := calcDate(f, today)
 	if err != nil {

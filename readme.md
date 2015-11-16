@@ -87,10 +87,12 @@ The by-week `|` operator handles those "2nd Sunday of the month" situations.
 
     15.09.10r |y+1r 1st Thursday of this month next year
 
-Finally, for when you just want today's date, the `-t` option will spit it out today.
+When you just want today's date, the `-t` option will spit it out today.
 
     $ tickler-date -t
     15.09.10r
+
+Finally, you can operate on several lines at the same time.
 
 # Vim mappings
 

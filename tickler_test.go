@@ -100,6 +100,11 @@ func TestBump(t *testing.T) {
 		{"15.09.12s test a (>4d) b", 0, "15.09.16w test a (>4d) b"},
 		{"15.09.06u test (|m+1m)", 0, "15.10.05m test (|m+1m)"},
 
+		// bump multiple at the same time
+		{"test >4d\n15.11.04w >1d", 0, "15.09.06u test >4d\n15.11.05r >1d"},
+		{"test >4d\n15.11.04w >1d\n", 0, "15.09.06u test >4d\n15.11.05r >1d"},
+		{"\ntest >4d\n15.11.04w >1d\n", 0, "15.09.06u\n15.09.06u test >4d\n15.11.05r >1d"},
+
 		// weird inputs
 		{"15.09.09w test+2dtest test", 0, "15.09.09w test+2dtest test"},
 		{"15.09.09w +2dtest test", 0, "15.09.09w +2dtest test"},
@@ -111,7 +116,7 @@ func TestBump(t *testing.T) {
 
 	today := time.Date(2015, time.September, 6, 0, 0, 0, 0, time.UTC) // a sunday
 	for _, c := range cases {
-		got := Bump(c.in, today, c.plus)
+		got := BumpMultiple(c.in, today, c.plus)
 		if strings.Contains(c.want, "ERROR") {
 			if strings.Contains(got, "ERROR") {
 				continue
