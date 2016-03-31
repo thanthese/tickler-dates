@@ -9,7 +9,7 @@ Intended use is to pipe a line from a text editor through the utility and back i
 
 # Installation
 
-    $ go get https://github.com/thanthese/tickler-dates
+    $ go get github.com/thanthese/tickler-dates
 
 # Calendar/tickler file format
 
